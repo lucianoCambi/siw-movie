@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Film</title>
+<link rel="stylesheet" href="/css/stile.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div>
+		<a href="/"><img src="/images/logo-siw.png" width="30%" /></a>
+	</div>
+	<h1>Dettagli Film</h1>
+	<div th:if="${movie}">
+		<div><img width="15%" th:src=${movie.urlImage} /></div>
+       <div class="info">
+        <span  th:text="${movie.title}+' (' + ${movie.year} + ')'">Up!</span>
+        <div th:if="${movie.director}">Regista:
+        <span th:text="${movie.director.name}"></span></div>
+        <div th:if="${!movie.actors.isEmpty()}">Attori:
+        <span  th:each="artist : ${movie.actors}"><span th:text="${artist.name}+', '"></span></span>
+        </div>
+        </div>
+
+
+
+
+		<div class="recensioni">
+			<span>Recensioni:</span>
+			<ul>
+				<li class="recensione" th:each="recensione : ${movie.recensioni}">
+						recensione</a>
+						
+						<strong th:text="${recensione.titolo}"> </strong>
+						<div th:text="${recensione.utente.name}"></div>
+					<div th:text="'Valutazione:'+${recensione.valutazione}+' stella/e'"></div>
+				<div th:text="${recensione.testo}"></div><a
+					th:href="@{'/admin/eliminaRecensione/' + ${movie.id} + '/' + ${recensione.id}}" style="color:red">Elimina
+						recensione</a></li>
+			
+			</ul>
+			<div th:if="${movie.recensioni==null || movie.recensioni.isEmpty()}">Non
+				ci sono recensioni per questo film</div>
+		</div>
+
+	</div>
+	<div th:unless="${movie}">Non esiste</div>
+</body>
+</html>

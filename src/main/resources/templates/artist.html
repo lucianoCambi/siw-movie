@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Artista</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo-siw.png" width="30%"/></a></div>
+    <h1>Dettagli Artista</h1>
+    <div th:if="${artist}">
+    <div><img width="15%" th:src=${artist.urlOfPicture} /></div>
+    <div class="info">
+        <span th:text="${artist.name} + ' ' + ${artist.surname}">Dino Risi</span>
+        <span th:text="'(' + ${artist.dateOfBirth} + ')'">20/20/2000</span>
+        
+    </div>
+    </div>
+    <div th:unless="${artist}">Non esiste</div>
+  </body>
+</html>

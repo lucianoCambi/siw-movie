@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>New Recensione</title>
+<link rel="stylesheet" href="/css/stile.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css">
+</head>
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+	<div>
+		<a href="/"><img src="/images/logo-siw.png" width="30%" /></a>
+	</div>
+	<h1>
+		Aggiungi recensione per <span th:text="${movie.title}"></span>
+	</h1>
+	<form th:action="@{'/default/recensione/' + ${movie.id}}"	method="POST" th:object="${recensione}">
+		<div th:if="${#fields.hasGlobalErrors()}">
+			<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+		</div>
+
+		<div>
+			<label>Titolo recensione:</label> <span><input type="text"
+				th:field="${recensione.titolo}" /></span> <span
+				th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}"> </span>
+		</div>
+
+		<div>
+			<label>Testo:</label> <span><input type="text"
+				th:field="${recensione.testo}" /></span>
+		</div>
+
+		<div class="valutazione">
+
+			<span class="rating">
+				<input name="star" type="radio" th:field="${recensione.valutazione}" id="star1" value="5" /><label for="star1" ></label> 
+				<input name="star" type="radio" th:field="${recensione.valutazione}" id="star2" value="4" /><label for="star2"></label> 
+				<input name="star" type="radio" th:field="${recensione.valutazione}" id="star3" value="3" /><label for="star3"></label> 
+				<input name="star" type="radio" th:field="${recensione.valutazione}" id="star4" value="2" /><label for="star4"></label>  
+				<input name="star" type="radio" th:field="${recensione.valutazione}" id="star5" value="1" /><label for="star5"></label>
+
+			</span>
+			<span
+				th:if="${#fields.hasErrors('valutazione')}" th:errors="*{valutazione}"> </span>
+		</div>
+
+		<div>
+			<span><button type="submit">Conferma</button></span>
+		</div>
+	</form>
+</body>
+</html>

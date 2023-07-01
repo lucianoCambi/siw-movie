@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Film</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+	<header>
+		<div th:if="${#request.userPrincipal}">
+			<span th:text="${#request.userPrincipal.principal.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${#request.userPrincipal}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+<div style="text-align:center;">
+	<div><a href="/"><img src="/images/logo-siw.png" width="30%"/></a></div>
+	<h1>Film</h1>
+	<div th:if="${movies==null || movies.isEmpty()}">Non ci sono film nel sistema</div>
+	</div>
+	
+	<div class="container">
+  <div class="col" th:each="movie : ${movies}">
+    <div class="card"><a th:href="@{'/movie' + '/' + ${movie.id}}">
+      <img th:src="${movie.urlImage}" width="15%" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title" th:text="${movie.title} + ' (' + ${movie.year} + ')'">Card title</h5>
+      </div></a>
+    </div>
+  </div>
+  </div>
+	
+	
+	
+	
+</body>
+
+</html>
