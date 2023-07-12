@@ -39,7 +39,7 @@
 		<li class="recensione" th:each="recensione : ${movie.recensioni}">
 		<strong th:text="${recensione.titolo}"> </strong>
 		<div th:text="${recensione.utente.name}"></div>
-		<div th:text="'Valutazione:'${recensione.valutazione}+' stella/e'">
+		<div th:text="'Valutazione:'+${recensione.valutazione}+' stella/e'">
 			    
 			
 			</div>
